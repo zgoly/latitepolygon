@@ -98,7 +98,7 @@ jobs:
           if-no-files-found: error
 
       - name: Create timestamped archival release
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master'
         uses: softprops/action-gh-release@v2.3.2
         with:
           tag_name: nightly-${{ env.TIMESTAMP }}
@@ -116,7 +116,7 @@ jobs:
             ${{ github.workspace }}/${{ env.BUILD_DIR }}/LatiteNightly.dll
 
       - name: Recreate nightly release to refresh date
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master'
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -125,7 +125,7 @@ jobs:
           git push origin :refs/tags/nightly || true
 
       - name: Create GitHub Release
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master'
         uses: softprops/action-gh-release@v2.3.2
         with:
           tag_name: nightly
